@@ -35,7 +35,13 @@
                 <button type="button" class="btn btn-primary">
                     <span class="fa fa-plus"></span> Gerar PDF
                 </button>
-              </a>
+               </a>
+
+                  <a target="_blank" type="button" href="{% url 'inscricoes:List_pdf_debug' %}">
+                     <button type="button" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> PDF debug
+                    </button>
+                  </a>
 
       </span>
     </h2>
@@ -50,6 +56,8 @@
             <th>CPF</th>
             <th>TELEFONE</th>
             <th>Email</th>
+            <th>Nota</th>
+            <th>Situação</th>
 
           </tr>
         </thead>
@@ -71,8 +79,34 @@
               <td>
                 {{ object.email }}
               </td>
+              <td>
+                  {% if object.nota  %}
 
-            </tr>
+                      <center>  {{ object.nota }} </center>
+
+                  {% else %}
+                    <center> - </center>
+
+                  {% endif %}
+              </td>
+                  <td>
+                  {% if object.nota == 6  %}
+
+                      <center>  Aprovado </center>
+
+                  {% elif not object.nota  %}
+
+                      <center> - </center>
+
+                  {% elif object.nota > 6  %}
+
+                      <center>  Aprovado </center>
+
+                  {% else %}
+                    <center> Reprovado </center>
+
+                  {% endif %}
+              </td>
           {% endfor %}
         </tbody>
       </table>

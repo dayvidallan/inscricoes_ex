@@ -28,6 +28,7 @@
                               {% render_field field class="form-control" %}
                               {% for error in field.errors %}
                                 <span class="text-muted">{{ error }}</span>
+
                               {% endfor %}
                             </div>
                      </div>
@@ -38,6 +39,11 @@
             </div>
         </div>
       </div>
+                        {% if object %}
+                            <a href="{% url 'inscricoes:upload' object.id %}" class="btn btn-success">
+                                Adicionar documento
+                            </a>
+                        {% endif %}
                           <div class="row" style="padding-top: 30px;">
                               <div class="col-lg-8">
                                   <!--Manter somente no modo desenvolvimento-->
@@ -51,7 +57,14 @@
                                   </div>
                               </div>
                           </div>
+
+
+
+
 </form>
+
+
+
 {% endblock content %}
 
 {% block js %}

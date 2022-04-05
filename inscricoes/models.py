@@ -16,7 +16,7 @@ class Inscricao(models.Model):
     cep = models.CharField('cep', max_length=10, null=True, blank=True)
     data_nascimento = models.DateField(null=True, blank=True)
     nota = models.DecimalField(u'Valor Médio', max_digits=20, decimal_places=2, null=True, blank=True)
-    upload = models.FileField(upload_to='uploads/%Y/%m/%d/')
+    upload = models.FileField(upload_to='upload', null=True, blank=True)
 
 
     class Meta:

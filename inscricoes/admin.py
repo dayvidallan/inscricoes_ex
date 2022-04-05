@@ -16,6 +16,7 @@ class InscricaoAdmin(admin.ModelAdmin):
         'cpf',
         'telefone',
         'email',
+        'upload',
 
 
     )

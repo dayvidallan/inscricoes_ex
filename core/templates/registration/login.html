@@ -14,12 +14,11 @@
     </div>
 
     <center><div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="{midia/ogo.png}" alt="...">
+          <!---<img class="card-img-top" src="{% static 'img/logo.png' %}" alt="...">-->
               <div class="card-body">
-                    <h5 class="card-title">LOGUIN</h5>
                     <div class="jumbotron">
                         <div class="row">
-                            <div class="col-lg-30">
+                            <div class="col-lg-100">
                                 <form method="post">
                                     <!-- Todo formulário tem que ter essa validação -->
                                     {% csrf_token %}

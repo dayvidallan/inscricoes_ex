@@ -5,7 +5,7 @@ from xhtml2pdf import pisa
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView, View
+from django.views.generic import CreateView, ListView, UpdateView, View, TemplateView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .forms import InscricaoForm
@@ -62,9 +62,9 @@ class GeneratePdf(View):
 
 class GeneratePDF(View):
     def get(self, request, *args, **kwargs):
-        objects = Inscricao.objects.all()
+        object = Inscricao.objects.all()
         dados = {
-            'object_list': objects,
+            'object_list': object,
         }
         template = get_template('list_pdf.html')
 
@@ -82,7 +82,6 @@ class GeneratePDF(View):
         return HttpResponse("Not found")
 
 """class GerarPDFMixin:
-
     def render_to_pdf(self, template_end, context_dict={}):
         template = get_template(template_end)
         html = template.render(context_dict)
@@ -93,9 +92,7 @@ class GeneratePDF(View):
         except Exception as e:
             print(e)
             return None
-
 class ProdutoListPdfView(View, GerarPDFMixin):
-
     def get(self, request, *args, **kwargs):
         inscritos = Produto.objects.all()
         dados = {
@@ -103,6 +100,7 @@ class ProdutoListPdfView(View, GerarPDFMixin):
         }
         pdf = GerarPDFMixin()
         return pdf.render_to_pdf('list_pdf.html', dados)"""
+
 
 
 def produto_detail(request, pk):
@@ -123,6 +121,12 @@ def produto_add(request):
 
     context = {'form': form}
     return render(request, template_name, context)
+
+class Upload(CreateView):
+    model = Inscricao
+    template_name = 'documento_form.html'
+
+    form_class = InscricaoForm
 
 
 class ProdutoCreate(CreateView):
@@ -165,3 +169,5 @@ def save_data(data):
     Inscricao.objects.bulk_create(aux)
 
 
+class PdfDebug(TemplateView):
+    template_name = 'list_pdf.html'
