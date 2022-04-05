@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Inscrições</h1>
+      <p>Inscrição no Curso ... </p>
+      <p>
+        <a href="{% url 'inscricoes:produto_list' %}" class="btn btn-link">Lista de Inscritos</a>
+
+      </p>
+    </div>
+  </div>
+
+{% endblock content %}

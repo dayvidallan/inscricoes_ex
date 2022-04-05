@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+
+  </ul>
+
+  {% for message in messages %}
+    {% if 'success' in message.tags %}
+      <p class="alert alert-success" role="alert"><span style="font-weight: bold">{{ message }}</span></p>
+    {% else %}
+      <p class="alert alert-danger" role="alert"><span style="font-weight: bold">{{ message }}</span></p>
+    {% endif %}
+  {% endfor %}
+
+  <div class="row">
+    <div class="col-sm-6">
+      <form action="." method="GET" class="form-inline">
+        <input type="text" id="search" name="search" class="form-control" placeholder="Busca">
+        <input type="submit" class="btn btn-primary" style="margin-left: 10px;" value="OK">
+      </form>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <h2>Lista de Inscritos
+      <span class="pull-right">
+              <a href="{% url 'inscricoes:produto_add' %}">
+                  <button type="button" class="btn btn-primary">
+                    <span class="fa fa-plus"></span> Adicionar
+                  </button>
+              </a>
+               <a target="_blank" type="button" href="{% url 'inscricoes:list_pdf' %}">
+                <button type="button" class="btn btn-primary">
+                    <span class="fa fa-plus"></span> Gerar PDF
+                </button>
+              </a>
+
+      </span>
+    </h2>
+
+    {% if object_list %}
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nº</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>TELEFONE</th>
+            <th>Email</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td>
+                {{ object.id }}
+              </td>
+              <td>
+                <a href="{{ object.get_absolute_url }}">{{ object.nome }}</a>
+              </td>
+               <td>
+                {{ object.cpf }}
+              </td>
+              <td>
+              {{ object.telefone }}
+              </td>
+              <td>
+                {{ object.email }}
+              </td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="alert alert-warning">Sem itens na lista.</p>
+    {% endif %}
+
+  </div>
+
+
+  {% include "includes/pagination.html" %}
+
+    {% else %}
+    <p3><b>ÁREA RESTRITA POR FAVOR FAÇO O LOGIN</b></p3>
+      <li><a href="{% url 'login'%}?next={{request.path}}">Faça o Login</a></li>
+    {% endif %}
+
+{% endblock content %}
+
+{% block js %}
+
+
+  <script>
+    // Close alert after 2 seconds
+    window.setTimeout(function() {
+      $('.alert').fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 2000);
+  </script>
+
+{% endblock js %}

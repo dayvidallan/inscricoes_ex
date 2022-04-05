@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+  <form method="POST" novalidate>
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_importado">
+
+        Situação
+
+      </label>
+      <input type="checkbox" name="aprovado" class="form-control" id="id_importado">
+
+    </div>
+
+    <div class="form-group">
+      <label for="id_nome">
+
+        <span class="required">Nome </span>
+
+      </label>
+      <input type="text" name="nome" maxlength="8" class="form-control" required id="id_nome">
+
+    </div>
+
+    <div class="form-group">
+      <label for="id_cpf">
+
+        <span class="required">CPF </span>
+
+      </label>
+      <input type="text" name="cpf" maxlength="100" class="form-control" required id="id_cpf">
+
+    </div>
+
+     <div class="form-group">
+      <label for="id_email">
+
+        <span class="required">E-mail </span>
+
+      </label>
+      <input type="text" name="nome" maxlength="8" class="form-control" required id="id_email">
+
+    </div>
+
+    <div class="form-group">
+      <label for="id_data">
+
+        Data
+
+      </label>
+      <input type="text" name="data" class="form-control" id="id_data">
+
+    </div>
+
+    <button type="submit" class="btn btn-success">Cadastrar</button>
+  </form>
+
+{% endblock content %}
+
+{% block js %}
+
+  <script src="{% static 'js/produto.js' %}"></script>
+
+{% endblock js %}

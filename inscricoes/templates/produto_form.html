@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+  <div class="news">
+        <div class="container">
+
+  <form method="POST" >
+    <input type="hidden" name="_token" value="KqXYW17ieq2LPliZfWjnyrHlfMwZ6iQQPPglAh1k">
+      <div id="inscricaoCadastro">
+          <div class="row" style="padding-top: 60px;">
+              <div class="col-lg-8">
+                  <div class="card">
+                      <div class="card-header">Cadastrar Candidato</div>
+                          {% csrf_token %}
+                          {% for field in form.visible_fields %}
+                     <div class="col-md-9">
+                            <div class="form-group{% if field.errors %} has-error {% endif%}">
+                              <label for="{{ field.id_for_label }}">
+                                {% if field.field.required %}
+                                  <span class="required">{{ field.label }} </span>
+                                {% else %}
+                                  {{ field.label }}
+                                {% endif %}
+                              </label>
+                              {% render_field field class="form-control" %}
+                              {% for error in field.errors %}
+                                <span class="text-muted">{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                     </div>
+                          {% endfor %}
+
+
+              </div>
+            </div>
+        </div>
+      </div>
+                          <div class="row" style="padding-top: 30px;">
+                              <div class="col-lg-8">
+                                  <!--Manter somente no modo desenvolvimento-->
+                                                  <!--fim do trecho para exibir erros no registro-->
+                                  <div class="form-group row">
+                                      <div class="col-md-11">
+                                          <button type="submit" class="btn btn-primary" id="btnContinuar" onclick="continuar(0);">
+                                              Confirmar
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+</form>
+{% endblock content %}
+
+{% block js %}
+
+  <script src="{% static 'js/produto.js' %}"></script>
+
+{% endblock js %}

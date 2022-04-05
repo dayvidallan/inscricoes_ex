@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <a href="{% url 'core:index' %}">Voltar</a>
+
+  <h1>{{ object }}
+    <span class="pull-right">
+      <a href="{% url 'inscricoes:produto_edit' object.pk %}">
+        <button type="button" class="btn btn-success">
+          <span class="fa fa-pencil"></span> Editar
+        </button>
+      </a>
+    </span>
+  </h1>
+
+  <div class="col-sm-6">
+    <table class="table table-user-information">
+      <tbody>
+        <tr>
+          <th >Situação</th>
+        </tr>
+        <tr>
+          <th>Nome</th>
+          <td>{{ object.nome }}</td>
+        </tr>
+        <tr>
+          <th>CPF</th>
+          <td>{{ object.cpf }}</td>
+        </tr>
+        <tr>
+          <th >E-mail</th>
+          <td>{{ object.email }}</td>
+        </tr>
+        <tr>
+          <th >Telefone</th>
+          <td>{{ object.telefone }}</td>
+        <tr>
+          <th >Endereço</th>
+          <td>{{ object.endereco }}, Nº {{ object.numero}} - {{ object.cidade }}/{{ object.estado }} - {{ object.cep }}</td>
+        </tr>
+        <tr>
+          <th >Data de Nascimento</th>
+          <td>{{ object.data_nascimento }}</td>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+
+{% endblock content %}
