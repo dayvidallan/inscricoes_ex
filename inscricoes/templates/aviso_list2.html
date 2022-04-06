@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="{% url 'inscricoes:produto_add' %}">Voltar</a>
+  </ul>
+
+  {% for message in messages %}
+    {% if 'success' in message.tags %}
+      <p class="alert alert-success" role="alert"><span style="font-weight: bold">{{ message }}</span></p>
+    {% else %}
+      <p class="alert alert-danger" role="alert"><span style="font-weight: bold">{{ message }}</span></p>
+    {% endif %}
+  {% endfor %}
+
+
+  <div class="page-header">
+
+    <center><h2>Quadro de Avisos</h2></center>
+      <span class="pull-right">
+              <!--- <a target="_blank" type="button" href="{% url 'inscricoes:list_pdf' %}">
+                <button type="button" class="btn btn-primary">
+                    <span class="fa fa-plus"></span> Gerar PDF
+                </button>
+               </a>
+
+                  <a target="_blank" type="button" href="{% url 'inscricoes:List_pdf_debug' %}">
+                     <button type="button" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> PDF debug
+                    </button>
+                  </a>-->
+
+      </span>
+
+
+    {% if object_list %}
+
+      <table class="table table-striped">
+        <thead>
+
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td>
+               <h2><center>{{ object.aviso }}</center></h2>
+              </td>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="alert alert-warning">Sem itens na lista.</p>
+    {% endif %}
+
+  </div>
+
+
+  {% include "includes/pagination.html" %}
+
+
+{% endblock content %}
+
+{% block js %}
+
+
+  <script>
+    // Close alert after 2 seconds
+    window.setTimeout(function() {
+      $('.alert').fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 2000);
+  </script>
+
+{% endblock js %}

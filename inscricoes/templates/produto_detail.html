@@ -2,17 +2,28 @@
 
 {% block content %}
 
-  <a href="{% url 'core:index' %}">Voltar</a>
 
-  <h1>{{ object }}
+
+  <center><h1>{{ object }}
     <span class="pull-right">
       <a href="{% url 'inscricoes:produto_edit' object.pk %}">
         <button type="button" class="btn btn-success">
           <span class="fa fa-pencil"></span> Editar
         </button>
       </a>
+        <!--- <a target="_blank" type="button" href="{% url 'inscricoes:list_pdf' %}">
+                <button type="button" class="btn btn-primary">
+                    <span class="fa fa-plus"></span> Gerar PDF
+                </button>
+               </a>
+
+                  <a target="_blank" type="button" href="{% url 'inscricoes:List_pdf_debug' %}">
+                     <button type="button" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> PDF debug
+                    </button>
+                  </a>-->
     </span>
-  </h1>
+  </h1></center>
 
   <div class="col-sm-6">
     <table class="table table-user-information">

@@ -28,3 +28,14 @@ class Inscricao(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('inscricoes:produto_detail', kwargs={'pk': self.pk})
 
+
+class FimInscricoes(models.Model):
+    aviso = models.TextField()
+    fim_inscricao = models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return reverse_lazy('inscricoes:aviso_list')
+
+
+
+

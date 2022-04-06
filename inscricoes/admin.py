@@ -4,10 +4,19 @@ from datetime import datetime
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import Inscricao
+from .models import Inscricao, FimInscricoes
 
 MDATA = datetime.now().strftime('%Y-%m-%d')
 
+
+@admin.register(FimInscricoes)
+class FimInscricoes(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'fim_inscricao',
+
+
+    )
 
 @admin.register(Inscricao)
 class InscricaoAdmin(admin.ModelAdmin):

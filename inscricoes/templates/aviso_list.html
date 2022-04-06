@@ -3,8 +3,8 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-<a href="{% url 'core:index' %}">Voltar</a>
-<br>
+
+
   </ul>
 
   {% for message in messages %}
@@ -17,13 +17,10 @@
 
 
   <div class="page-header">
-    <h2><center>Lista de Inscritos</center>
+    <a href="{% url 'core:index' %}">Voltar</a>
+
+    <center><h2>Quadro de Avisos</h2></center>
       <span class="pull-right">
-              <a target="_blank" href="{% url 'inscricoes:produto_add' %}">
-                  <button type="button" class="btn btn-primary">
-                    <span class="fa fa-plus"></span> Adicionar
-                  </button>
-              </a>
               <!--- <a target="_blank" type="button" href="{% url 'inscricoes:list_pdf' %}">
                 <button type="button" class="btn btn-primary">
                     <span class="fa fa-plus"></span> Gerar PDF
@@ -37,16 +34,6 @@
                   </a>-->
 
       </span>
-        <div class="row">
-            <div class="col-sm-6">
-              <form action="." method="GET" class="form-inline">
-                <input type="text" id="search" name="search" class="form-control" placeholder="Busca">
-                <input type="submit" class="btn btn-primary" style="margin-left: 10px;" value="OK">
-              </form>
-            </div>
-        </div>
-    </h2>
-      <br>
 
 
     {% if object_list %}
@@ -55,12 +42,8 @@
         <thead>
           <tr>
             <th>Nº</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>TELEFONE</th>
-            <th>Email</th>
-            <th>Nota</th>
-            <th>Situação</th>
+            <th>Aviso</th>
+            <th>Situação das Incirções</th>
 
           </tr>
         </thead>
@@ -71,45 +54,16 @@
                 {{ object.id }}
               </td>
               <td>
-                <a target="_blank" href="{% url 'inscricoes:produto_edit_nota' object.id %}">{{ object.nome }}</a>
+                <a href="{% url 'inscricoes:aviso_edit' object.id %}">{{ object.aviso }}</a>
               </td>
-               <td>
-                {{ object.cpf }}
+                <td>
+                {% if object.fim_inscricao %}
+                  <p>Encerradas</p>
+                {% else %}
+                   <p>Abertas</p>
+                {% endif %}
               </td>
-              <td>
-              {{ object.telefone }}
-              </td>
-              <td>
-                {{ object.email }}
-              </td>
-              <td>
-                  {% if object.nota  %}
 
-                      <center>  {{ object.nota }} </center>
-
-                  {% else %}
-                    <center><b>-</b> </center>
-
-                  {% endif %}
-              </td>
-                  <td>
-                  {% if object.nota == 6  %}
-
-                      <center>  <b>Aprovado</b> </center>
-
-                  {% elif not object.nota  %}
-
-                      <center> <b>-</b> </center>
-
-                  {% elif object.nota > 6  %}
-
-                      <center>  <b>Aprovado</b> </center>
-
-                  {% else %}
-                    <center> <font color="#AA0000"><b>Reprovado</b></font></center>
-
-                  {% endif %}
-              </td>
           {% endfor %}
         </tbody>
       </table>

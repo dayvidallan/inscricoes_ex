@@ -1,19 +1,45 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
+
+<style>
+
+    img {
+  width: 100px;
+  }
+</style>
 
 
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <header class="mb-auto">
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Inscrições</h1>
-      <p>Inscrição no Curso ... </p>
-      <p>
-        <a href="{% url 'inscricoes:produto_list' %}" class="btn btn-link">Lista de Inscritos</a>
+    <div class="jumbotron">
+      <div class="container">
+        <div class="container">
+            <center><img src="{% static 'img/logoex.png' %}"  /></center>
+        </div>
 
-      </p>
+        <center><h1>Área do Administrador</h1></center>
+
+        <br>
+        <br>
+
+
+        <center>
+                  <a href="{% url 'inscricoes:produto_list'%}">
+                    <button type="button" class="btn btn-primary">
+                        Inscritos <span class="badge badge-light">{{object.count}}</span>
+                    </button>
+                  </a>
+
+              <a href="{% url 'inscricoes:aviso_list' %}">
+                <button type="button" class="btn btn-success"> Avisos  </button>
+              </a>
+        </center>
+
+      </div>
     </div>
-  </div>
+  </header>
+</div>
 
 {% endblock content %}

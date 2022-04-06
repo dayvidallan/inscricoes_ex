@@ -2,14 +2,15 @@ from io import BytesIO
 from django.template.loader import get_template
 from django.http import HttpResponse
 from xhtml2pdf import pisa
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView, View, TemplateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import InscricaoForm
-from .models import Inscricao
+from .forms import InscricaoForm, InscricaoNotaForm, AvisoForm
+from .models import Inscricao, FimInscricoes
+
 
 @login_required(login_url='login/')
 def home(request):
@@ -19,11 +20,14 @@ def home(request):
 def produto_list(request):
     template_name = 'produto_list.html'
     objects = Inscricao.objects.order_by("id").all()
+    count = Inscricao.bjects.values("cpf").annotate(Count("id"))
+    contador = {'count': count}
+
     search = request.GET.get('search')
     if search:
         objects = objects.filter(nome__icontains=search)
     context = {'object_list': objects}
-    return render(request, template_name, context)
+    return render(request, template_name, context, contador)
 
 class InscricaoList(ListView):
     model = Inscricao
@@ -45,6 +49,8 @@ class ListaInscritosListView(ListView):
     template_name = 'produto_list.html'
     context_object_name = 'inscritos'
 
+'''PDF'''
+
 def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
@@ -54,13 +60,18 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
+
 class GeneratePdf(View):
+
     def get(self, request, *args, **kwargs):
         data = Inscricao.objects.all()
         pdf = render_to_pdf('list_pdf.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
+
+
 class GeneratePDF(View):
+
     def get(self, request, *args, **kwargs):
         object = Inscricao.objects.all()
         dados = {
@@ -80,6 +91,8 @@ class GeneratePDF(View):
             response['Content-Disposition'] = content
             return response
         return HttpResponse("Not found")
+
+
 
 """class GerarPDFMixin:
     def render_to_pdf(self, template_end, context_dict={}):
@@ -125,24 +138,29 @@ def produto_add(request):
 class Upload(CreateView):
     model = Inscricao
     template_name = 'documento_form.html'
-
     form_class = InscricaoForm
 
 
 class ProdutoCreate(CreateView):
     model = Inscricao
-    template_name = 'produto_form.html'
+    template_name = 'documento_form.html'
     form_class = InscricaoForm
 
 
 class ProdutoUpdate(UpdateView):
     model = Inscricao
-    template_name = 'produto_form.html'
+    template_name = 'documento_form.html'
     form_class = InscricaoForm
 
 
+
+class ProdutoNotaUpdate(UpdateView):
+    model = Inscricao
+    template_name = 'documento_form_nota.html'
+    form_class = InscricaoNotaForm
+
+
 def produto_json(request, pk):
-    ''' Retorna o produto, id e estoque. '''
     inscricao = Inscricao.objects.filter(pk=pk)
     data = [item.to_dict_json() for item in inscricao]
     return JsonResponse({'data': data})
@@ -171,3 +189,30 @@ def save_data(data):
 
 class PdfDebug(TemplateView):
     template_name = 'list_pdf.html'
+
+
+"""AVISOS"""
+
+
+class ListaAvisosView(ListView):
+    model = FimInscricoes
+    template_name = 'aviso_list.html'
+    context_object_name = 'avisos'
+
+class AvisoCreate(CreateView):
+    model = FimInscricoes
+    template_name = 'aviso_form.html'
+    form_class = AvisoForm
+
+
+class AvisoUpdate(UpdateView):
+    model = FimInscricoes
+    template_name = 'aviso_form.html'
+    form_class = AvisoForm
+
+
+class ListaAvisosView2(ListView):
+    model = FimInscricoes
+    template_name = 'aviso_list2.html'
+    context_object_name = 'avisos'
+

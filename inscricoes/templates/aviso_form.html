@@ -1,42 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
+
 {% load static %}
 {% load crispy_forms_tags %}
 {% block header %} {% endblock %}
 {% block container %}
 
+{% if user.is_authenticated %}
 
+<a href="{% url 'core:index' %}">Voltar</a>
 <form method="post" enctype="multipart/form-data" xmlns="http://www.w3.org/1999/html">
-
     <input type="hidden" name="_token" value="KqXYW17ieq2LPliZfWjnyrHlfMwZ6iQQPPglAh1k">
       <div id="inscricaoCadastro">
-
           <div class="row" style="padding-top: 60px;">
-
               <div class="col-lg-8">
                   <div class="card">
-
-
-
-                      <div class="card-header">Cadastrar Candidato
-                          <a href="{% url 'inscricoes:aviso_list2'%}">
-                        <button  type="button" class="btn btn-danger">
-                            Avisos <span class="badge badge-light">{{object.count}}</span>
-                        </button>
-                  </a></div>
+                      <div class="card-header">Avisos</div>
                         {% csrf_token %}
                         {{ form|crispy }}
 
                           <div class="row" style="padding-top: 30px;">
                                   <div class="col-lg-8">
-
+                                      <!--Manter somente no modo desenvolvimento-->
+                                                      <!--fim do trecho para exibir erros no registro-->
                                       <div class="form-group row">
                                           <div class="col-md-11">
-
+                                               <a href="{% url 'inscricoes:produto_list' %}">
                                                   <button type="submit" class="btn btn-primary" id="btnContinuar" onclick="continuar(0);">
                                                       Confirmar
                                                   </button>
-
+                                               </a>
                                           </div>
                                       </div>
                                   </div>
@@ -47,8 +40,10 @@
       </div>
     </input>
 </form>
-
-
+{% else %}
+    <p3><b>ÁREA RESTRITA POR FAVOR FAÇO O LOGIN</b></p3>
+      <li><a href="{% url 'login'%}?next={{request.path}}">Faça o Login</a></li>
+{% endif %}
 {% endblock %}
 
 {% endblock content %}
