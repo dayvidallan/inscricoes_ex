@@ -21,6 +21,16 @@
 
     </ul>
      {% if user.is_authenticated %}
+      <style>
+
+        .left img {
+        max-width:25px;
+        width: auto;
+            }
+    </style>
+       <div class="left">
+           <a href="{% url 'core:index' %}"><left><img src="{% static 'img/logop.png' %}"  align="left"/></left></a>
+        </div>
      <br>
         <ul class="navbar-nav px-3">
           <li class="nav-item text-nowrap">
